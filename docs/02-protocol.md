@@ -61,7 +61,8 @@ Responses are JSON:
 
 1. **Field types matter.** The native JSON readers read numbers as numbers and strings as
    strings; a number sent as a string (or the reverse) is read as the default value.
-2. **Absent keys fall back to defaults** (0, -1, empty). A missing `serverTS` makes "now" = 1970.
+2. **Absent keys fall back to defaults** (0, -1, empty). Clock fields are a special case, see
+   [09](09-calendar-and-events.md).
 3. **Order is irrelevant, keys are not.** Readers look up keys by name.
 4. **Replace semantics**: send full lists where the client expects full lists.
 5. The client also sends analytics/SDK traffic to third-party hosts at startup; the game works

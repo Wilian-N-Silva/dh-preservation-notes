@@ -9,9 +9,12 @@
   2099 overflow and the content disappears or the screen loops (CONFIRMED, observed).
 - Active means `start <= now < end` (end exclusive). An **empty** date is not "forever": it
   converts to -1 and an empty end fails the check (CONFIRMED).
-- `now` is the server time from the latest response carrying it (`serverTS` in login/home,
-  `server_time` in the resource list). Without it the client uses 0 (1970) and anything
-  starting later is invisible (CONFIRMED).
+- `now` comes from the server clock: `result.serverTS` in login and home (API 0 / 88) and
+  `server_time` at the **root of the JSON document** of the resource list (API 50, a sibling of
+  `result`). Missing values behave differently per path: a login/home response without
+  `serverTS` does not necessarily erase an earlier sync, but API 50 resets the time base even
+  when the value is missing, which can leave "now" near the epoch. Send a consistent value in
+  all three (CONFIRMED).
 
 ## Quest types and pages
 
@@ -41,9 +44,10 @@
 
 A private restoration served original event rows with a valid date window and observed the
 client **freeze while loading the event page** (render thread blocked, no crash, no network
-request). Tried and ruled out as the sole cause: a missing story-scene archive, missing sibling
-stages of the difficulty groups, the absence of a type-1 quest on page 0, and the reward card
-art. The cause is still UNKNOWN. If you get further, a native backtrace of the blocked render
+request). Tried on the device and ruled out as the sole cause: a missing story-scene archive,
+missing sibling stages of the difficulty groups, and the absence of a type-1 quest on page 0.
+A missing reward-card image was not supported by static analysis but was not tested on the
+device. The cause is still UNKNOWN. If you get further, a native backtrace of the blocked render
 thread is the most useful evidence.
 
 ## Seasonal events (a reconstruction policy)

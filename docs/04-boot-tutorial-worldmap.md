@@ -8,8 +8,9 @@ correctly); they are not recovered historical server responses.
 ## Boot
 
 1. **Resource check** (`get_image_list`, API 50): the server returns `file_list[]`
-   (`file_name`, `mode`, `md5`, `lang`), the download server, and **`server_time`** at the
-   root of the result. Files whose MD5 differs are downloaded.
+   (`file_name`, `mode`, `md5`, `lang`) and the download server inside `result`, and
+   **`server_time`** at the root of the JSON document (a sibling of `result`, not inside it).
+   The qualified success status is `S20000`. Files whose MD5 differs are downloaded.
 2. **Login** (API 0): the response carries the whole account (`cards`, `decks`, `item`,
    `quest` progress, `card_book`, balances, AP, capacity), **`tutorial_step`** and
    **`serverTS`**.
@@ -34,8 +35,9 @@ accepts an empty status for these).
 
 ## Getting from step 60 to the world map
 
-This is where most reconstructions get stuck. The map widget (`uiWorldMapWidget`) only
-opens when all of the following hold:
+This is where most reconstructions get stuck. The following configuration (real UTC clock)
+is qualified to reach the map widget (`uiWorldMapWidget`); not every point is proven to be
+strictly necessary in every setup:
 
 1. **`common_home` (API 88) succeeds.** Every sub-parser of its result must succeed before the
    client proceeds; a successful login alone is not proof of map entry (CONFIRMED).
@@ -49,8 +51,8 @@ opens when all of the following hold:
 4. **The server clock is synchronized everywhere**: `result.serverTS` in login and API 88 and
    the root `server_time` in API 50. API 50 updates the time base unconditionally, so a later
    response with a missing/empty value can undo an earlier sync (CONFIRMED).
-5. **Dates are int32-safe UTC strings** (see [09](09-calendar-and-events.md)). Real "now" plus
-   historical end dates from 2013–2017 means every quest is expired: adapt the windows of the
+5. **Dates are int32-safe UTC strings** (see [09](09-calendar-and-events.md)). With a real
+   "now", any quest whose original end date is in the past is hidden: adapt the windows of the
    copy you serve (for example end `2037-12-31 00:00:00`).
 
 ## Traps that send you back to the title screen or freeze

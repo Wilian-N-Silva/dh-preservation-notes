@@ -97,7 +97,7 @@ rarity bonus for rarity 0 (= 0).
 
 ```json
 { "user_card_id": 900001, "card_id": 300, "level": 8, "exp": 1200, "level_limit": -1,
-  "hp": 53, "attack": 30, "speed": 19, "defense": 18, "support": 13, "lock_flg": 0 }
+  "hp": 53, "attack": 28, "speed": 19, "defense": 17, "support": 13, "lock_flg": 0 }
 ```
 
 `level_limit: -1` means "use the card master's limit".

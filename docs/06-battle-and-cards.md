@@ -5,8 +5,9 @@ qualified; open parts are marked.
 
 ## Team and shared HP
 
-- The player fields a team (deck) of up to **six** Digimon ("icons"). One of them is the
-  leader, whose **leader skill** applies to the team.
+- The player fields a team of up to **five** own Digimon plus one **helper** (another
+  player's leader card), six "icons" in battle. One own card is the leader, whose
+  **leader skill** applies to the team.
 - The team has **one shared HP pool**: the sum of the HP of the team members (plus slot/rune
   bonuses). Enemy attacks reduce this pool (CONFIRMED).
 - Battle HP is an integer: damage is truncated, there is a minimum of 1 damage, HP never
@@ -45,12 +46,11 @@ Attacks are made with **attack cards**, not by tapping a Digimon directly.
 - **Main skill**: has a cooldown counted in turns; when ready, the player activates it
   (hold to preview, press to activate). After use the counter resets (CONFIRMED).
 - **Leader skill**: passive, from the leader card.
-- Skill effects are dispatched by a skill **type** (dozens of types exist). Two examples
-  verified on the original client:
-  - *Instant attack* (one type): damage to each enemy = `ATK × power / 100`
-    (example: ATK 48, power 150 → 72 to each of two enemies).
-  - *Defence* (another type): reduces incoming damage by a fixed amount for N enemy turns
-    (example: −75 per hit for two turns).
+- Skill effects are dispatched by a skill **type** (dozens of types exist). Two mechanics
+  verified on the original client (numbers below are synthetic):
+  - *Instant attack* (one type): damage to each target = `ATK × power / 100`
+    (illustration: ATK 40, power 150 → 60).
+  - *Defence* (another type): reduces each incoming hit by a fixed amount for N enemy turns.
 - Coefficients for all other skills are UNKNOWN in these notes.
 
 ## Enemies

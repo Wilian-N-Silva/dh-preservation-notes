@@ -13,8 +13,8 @@ little-endian signed** unless stated otherwise. Values shown in examples are syn
 
 | Offset | Type | Meaning | Confidence |
 |---|---|---|---|
-| 0x00 | u32 | Magic `0x31071220` | CONFIRMED |
-| 0x04 | u32 | Format/profile number (`67` in the analysed build) | CONFIRMED |
+| 0x00 | u32 | Constant `0x31071220` in every table (treat as a magic; purpose UNKNOWN) | value CONFIRMED |
+| 0x04 | u32 | `67` in every analysed table (likely a format/profile number) | value CONFIRMED, meaning INFERRED |
 | 0x08 | u32 | Record count | CONFIRMED |
 | 0x0C–0x1F | u32 × 5 | Zero in every analysed table | CONFIRMED |
 
@@ -153,7 +153,8 @@ at 0x04 … 0x28 (the item dropped depends on the enemy's rank).
 
 | Offset | Field | Confidence |
 |---|---|---|
-| 0x004 | `card_id` | CONFIRMED |
+| 0x000 | `card_id` | CONFIRMED |
+| 0x004 | `key_id` (a second identifier; not the card ID) | CONFIRMED |
 | 0x020 | `type` (growth family) | CONFIRMED |
 | 0x024 | `rarity` (index 0..9; stars = rarity + 1) | CONFIRMED |
 | 0x028 | `cost` | CONFIRMED |
@@ -187,5 +188,5 @@ offset the difficulty grouping uses, so it is not just a label (CONFIRMED).
   2038-01-19 overflows. Use `2037-12-31 00:00:00` as the "forever" end date.
   A date such as `2099-...` breaks the window check (CONFIRMED, observed).
 - A quest or area is active when `start ≤ now < end`.
-- `now` is the **server time** sent by the server. If the server never sends a time,
-  `now` is 0 (1970), and every window that starts later is closed (CONFIRMED).
+- `now` is derived from the **server time** sent by the server (see [09](09-calendar-and-events.md)
+  for how missing values behave).

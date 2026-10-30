@@ -19,11 +19,11 @@ inventory, currencies, progress, and the master data the client downloads.
 | Which quests/areas exist and when | Master data downloaded from the server | CONFIRMED |
 | Server time ("now") used for date windows | Server (in login/home responses) | CONFIRMED |
 
-Consequence for a reconstruction: the server must **validate** what the client
-reports (enemies fought, EXP, Bits, drops) instead of computing the battle itself.
-The client never sends a random seed; it sends the enemy IDs it generated and the
-totals it computed. A server can check that *some* allowed combination of enemy
-ranks reproduces those totals (see [07](07-progression-formulas.md)).
+Consequence for a reconstruction: the server cannot recompute the battle; it can only
+**check** what the client reports (enemies fought, EXP, Bits, drops). The client never sends
+a random seed; it sends the enemy IDs it generated and the totals it computed. How the
+original server checked them is UNKNOWN; a workable reconstruction is described in
+[07](07-progression-formulas.md) §1 (RECONSTRUCTED).
 
 ## How game data reaches the client
 

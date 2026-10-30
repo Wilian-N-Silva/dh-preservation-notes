@@ -2,8 +2,9 @@
 
 All formulas below come from reading the native client (Android 1.0.52) and, where
 noted, from observed behaviour. Integer division truncates toward zero.
-`f32(x)` means the value is computed in **32-bit float** (single precision), then
-truncated to an integer; the float rounding matters for exact matches.
+`f32(x)` means the value is rounded to **IEEE-754 single precision (binary32)**; it stays
+fractional. Only the outer `trunc()` converts to an integer. The float rounding matters for
+exact matches.
 
 ## 1. Battle rewards per enemy (EXP, Bits, drops)
 
@@ -19,8 +20,9 @@ Bits  = trunc( f32( enemy.bit * f32(rankset.bit_inc_rate / 10000) * M ) )
 card_threshold = trunc( f32( f32(enemy.card_drop_rate / 100) * f32(rankset.card_drop_inc_rate / 10000) * M ) )
 item_threshold = trunc( f32( f32(enemy.item_drop_rate / 100) * f32(rankset.drop_item_inc_rate / 10000) * M ) )
 
-card dropped  -> enemy.drop_card_id                   (if drop_card_id > 0 and the roll passes card_threshold)
-item dropped  -> enemy_dropset[enemy.drop_table_id].rank{R}_item_id   (R = rolled rank)
+drop (at most ONE per enemy):
+  card    -> enemy.drop_card_id                            (if drop_card_id > 0 and the roll passes card_threshold)
+  or item -> enemy_dropset[enemy.drop_table_id].rank{R}_item_id   (R = rolled rank)
 ```
 
 - `M` is an event modifier (1.0 when no event bonus table applies). CONFIRMED for M = 1;
@@ -32,9 +34,11 @@ item dropped  -> enemy_dropset[enemy.drop_table_id].rank{R}_item_id   (R = rolle
 
 The client reports to the server, at quest end: the list of enemy IDs fought (in round
 order), the total EXP, total Bits, and the dropped card/item IDs. The server only sees
-IDs and totals, never the ranks. A faithful server accepts the report when **some**
-assignment of allowed ranks (the same rank for an enemy's EXP, Bits and drops)
-reproduces the totals exactly.
+IDs and totals, never the ranks. How the original server validated this is UNKNOWN. One
+workable validation (RECONSTRUCTED): accept when **some** assignment of allowed ranks (the
+same rank for an enemy's EXP, Bits and drops) reproduces the EXP exactly, keeps the Bits at
+or below the maximum possible, and can produce the reported drops, each drop attributed to a
+different enemy.
 
 ## 2. Encounters (waves)
 
@@ -106,9 +110,9 @@ the real levels involved. The result is a new card row at level 1 of the target 
 
 ## 7. Inventory capacity
 
-- The account has a card capacity. Observed values: 7 during the tutorial, 12 after,
-  then +5 per "Hard Drive" item, up to 250 (the item caption states the cap). CONFIRMED
-  for the observed steps.
+- The account has a card capacity (`max_digimon_count`). Each "Hard Drive" item adds **+5**
+  and the item caption states a cap of **250** (CONFIRMED). The starting capacity of a new
+  account and whether it grows automatically after the tutorial are UNKNOWN in these notes.
 - Exceeding capacity blocks battle start and gasha; the client offers a "not enough
   space" menu (sell / upgrade).
 

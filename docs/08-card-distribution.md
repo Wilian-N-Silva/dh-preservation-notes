@@ -4,8 +4,9 @@ Cards (Digimon) reached the player through four channels.
 
 ## 1. Battle drops
 
-Each enemy may drop **its own card** (`enemy_param.drop_card_id`) and an **item** chosen by
-its rolled rank (`enemy_dropset.rank{R}_item_id`). Drop thresholds scale with the rank
+Each defeated enemy yields **at most one** drop: either **its own card**
+(`enemy_param.drop_card_id`) **or** an **item** chosen by its rolled rank
+(`enemy_dropset.rank{R}_item_id`), never both from the same enemy. Drop thresholds scale with the rank
 (see [07](07-progression-formulas.md) §1). Higher-ranked enemies are worth more EXP/Bits
 and drop more often. Dropped cards arrive at **level 1** with the base stats from the card
 master. CONFIRMED.
@@ -39,9 +40,10 @@ Eggs were the main way to obtain rare cards.
 | Normal (friend points) | 1★–8★ | 1 = 200 FP; 5 = 1000 FP + 1 bonus |
 | Green SP ticket | 1★–9★ | 1 ticket = 1 egg; 5 tickets = 5 + 1 bonus |
 
-- Community reports (official forum, 2017): every egg type had a **finite box** of Digimon
-  ("at around 2500 eggs you are sure to have them all"); rare cards appeared mainly through
-  rotations and events; a 28-egg premium sample gave 11 cards at SP tier or above and 0 LR.
+- Community reports (official forum, 2017, paraphrased): a player described eggs as boxes that
+  are eventually exhausted after a few thousand draws (not verified for every egg type); rare
+  cards appeared mainly through rotations and events; one player's 28 premium eggs gave 11 cards
+  at SP tier or above and no LR.
 
 ### What is lost
 

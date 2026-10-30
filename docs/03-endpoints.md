@@ -31,7 +31,7 @@ not proof of the historical server's code. Where the historical code is unknown,
 | 40 | `questAPI.php?action=quest_end` | quest/area/friend/deck IDs, `enemy[]`, `card[]` (dropped), `exp`, `gold`, `friend_point`, `missions_progress`, `fight_turns`, elapsed time, flags | `s90002` | `quest` (progress), new `cards[]`, `item[]`, `quest_reward`, level/EXP/gold, AP, `card_book` | CONFIRMED |
 | 44 | `questAPI.php?action=give_up` | `quest_id`, `quest_area_id`, `continue_count`, `enemy[]`, `card[]`, `give_up_context` | `s90006` | balances, item count, AP fields | CONFIRMED |
 | 46 | `friendAPI.php?action=search2` | `invite_id`, `friends`, `fb`, `all`, `current_team`, `exclude[]` | empty ACCEPTED | `user[]` (helper candidates with `leader_card`) | CONFIRMED |
-| 50 | `commonAPI.php?action=get_image_list` | not established | UNKNOWN | `file_list[{file_name, mode, md5, lang}]`, download server, `server_time` | CONFIRMED (response) |
+| 50 | `commonAPI.php?action=get_image_list` | not established | `S20000` (qualified branch) | `file_list[{file_name, mode, md5, lang}]`, download server; `server_time` at the document root | CONFIRMED (response) |
 | 65 | `homeAPI.php?action=show_coins` | — | `S70001` | login-shaped account result (balances) | CONFIRMED |
 | 66 | `friendAPI.php?action=get_friends` | — | `S40000` | an empty result is accepted; populated list UNKNOWN | CONFIRMED (bounded) |
 | 88 | `commonHomeAPI.php?action=common_home` | `send_login_bonus` | sub-status object (e.g. daily login `s70004`) | `friendpoints_list[]`, optional `quest`, `gift_box_list`, `daily_login`, `serverTS` | CONFIRMED |
